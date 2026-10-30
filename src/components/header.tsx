@@ -6,14 +6,21 @@ import {
   SearchIcon,
   UploadIcon,
 } from "@/components/icons";
+import { UserAvatar } from "@/components/user-avatar";
 
 type HeaderProps = {
   query: string;
   onQueryChange: (value: string) => void;
+  onSearch?: (value: string) => void;
   onToggleSidebar: () => void;
 };
 
-export function Header({ query, onQueryChange, onToggleSidebar }: HeaderProps) {
+export function Header({
+  query,
+  onQueryChange,
+  onSearch,
+  onToggleSidebar,
+}: HeaderProps) {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b border-zinc-200 bg-white px-3 sm:px-4">
       <div className="flex shrink-0 items-center gap-1">
@@ -53,7 +60,10 @@ export function Header({ query, onQueryChange, onToggleSidebar }: HeaderProps) {
       <form
         className="mx-auto hidden min-w-0 flex-1 items-center justify-center gap-2 md:flex"
         role="search"
-        onSubmit={(event) => event.preventDefault()}
+        onSubmit={(event) => {
+          event.preventDefault();
+          onSearch?.(query);
+        }}
       >
         <div className="flex h-10 w-full max-w-xl">
           <label className="sr-only" htmlFor="search-car-videos">
@@ -111,13 +121,7 @@ export function Header({ query, onQueryChange, onToggleSidebar }: HeaderProps) {
           className="ml-1 h-8 w-8 overflow-hidden rounded-full"
           aria-label="Your channel"
         >
-          <svg viewBox="0 0 32 32" className="h-full w-full" aria-hidden>
-            <circle cx="16" cy="16" r="16" fill="#1d4ed8" />
-            <path d="M4 20 Q4 16 9 15 L12 11 Q16 9 21 10 L24 14 Q28 15 28 19 L28 21 L4 21 Z" fill="#dc2626" />
-            <path d="M13 14 L15 11.5 L20 11.5 L22 14 Z" fill="#bfdbfe" />
-            <circle cx="10" cy="21" r="3" fill="#111827" />
-            <circle cx="23" cy="21" r="3" fill="#111827" />
-          </svg>
+          <UserAvatar className="h-full w-full" />
         </button>
       </div>
     </header>
