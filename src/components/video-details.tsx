@@ -10,7 +10,10 @@ import {
   ThumbDownIcon,
   ThumbUpIcon,
 } from "@/components/icons";
-import { formatCount, type Video } from "@/lib/videos";
+import Link from "next/link";
+import { channelHref, getChannel } from "@/lib/channels";
+import { formatCount } from "@/lib/format";
+import { videoMeta, type Video } from "@/lib/videos";
 
 type Vote = "like" | "dislike" | null;
 
@@ -41,6 +44,7 @@ export function VideoDetails({ video }: { video: Video }) {
   }
 
   const likes = video.likes + (vote === "like" ? 1 : 0);
+  const channel = getChannel(video.channelHandle);
 
   return (
     <section className="mt-3 px-4 sm:px-0">
@@ -50,11 +54,15 @@ export function VideoDetails({ video }: { video: Video }) {
 
       <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex min-w-0 items-center gap-3">
-          <ChannelAvatar icon={video.channelIcon} className="h-10 w-10 shrink-0" />
-          <div className="min-w-0">
-            <p className="truncate font-semibold text-zinc-900">{video.channel}</p>
-            <p className="text-xs text-zinc-600">{video.subscribers}</p>
-          </div>
+          <Link href={channelHref(channel.handle)} className="flex min-w-0 items-center gap-3">
+            <ChannelAvatar channel={channel} className="h-10 w-10 shrink-0" />
+            <div className="min-w-0">
+              <p className="truncate font-semibold text-zinc-900">{channel.name}</p>
+              <p className="text-xs text-zinc-600">
+                {formatCount(channel.subscribers)} subscribers
+              </p>
+            </div>
+          </Link>
           <button
             type="button"
             onClick={() => setSubscribed((value) => !value)}
@@ -120,7 +128,7 @@ export function VideoDetails({ video }: { video: Video }) {
 
       <div className="mt-3 rounded-xl bg-zinc-100 p-3 text-sm text-zinc-900">
         <p className="font-semibold">
-          {video.views} · {video.published}
+          {videoMeta(video)}
         </p>
         <p className="mt-1 whitespace-pre-line">{video.description}</p>
       </div>

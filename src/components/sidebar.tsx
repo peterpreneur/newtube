@@ -69,7 +69,10 @@ export function Sidebar({ open, onClose, variant }: SidebarProps) {
               );
 
               return (
-                <li key={item.label}>
+                <li
+                  key={item.label}
+                  className={item.label === "History" ? "mt-3 border-t border-zinc-200 pt-3" : undefined}
+                >
                   {item.href ? (
                     <Link
                       href={item.href}

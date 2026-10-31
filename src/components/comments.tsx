@@ -8,8 +8,8 @@ import {
   ThumbUpIcon,
 } from "@/components/icons";
 import { InitialAvatar, UserAvatar } from "@/components/user-avatar";
-import { formatAge, type Comment } from "@/lib/comments";
-import { formatCount } from "@/lib/videos";
+import type { Comment } from "@/lib/comments";
+import { formatAge, formatCount } from "@/lib/format";
 
 type SortOrder = "top" | "newest";
 type Vote = "like" | "dislike";

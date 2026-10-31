@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { MoreVerticalIcon } from "@/components/icons";
 import { VideoThumbnail } from "@/components/video-thumbnail";
-import type { Video } from "@/lib/videos";
+import { getChannel } from "@/lib/channels";
+import { videoMeta, type Video } from "@/lib/videos";
 
 type RelatedVideosProps = {
   video: Video;
@@ -80,10 +81,10 @@ export function RelatedVideos({ video, candidates, className }: RelatedVideosPro
                   <h3 className="line-clamp-2 text-sm leading-5 font-semibold text-zinc-900">
                     {other.title}
                   </h3>
-                  <p className="mt-1 truncate text-xs text-zinc-600">{other.channel}</p>
-                  <p className="text-xs text-zinc-600">
-                    {other.views} · {other.published}
+                  <p className="mt-1 truncate text-xs text-zinc-600">
+                    {getChannel(other.channelHandle).name}
                   </p>
+                  <p className="text-xs text-zinc-600">{videoMeta(other)}</p>
                 </div>
               </Link>
               <button

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { Header } from "@/components/header";
 import { Sidebar } from "@/components/sidebar";
@@ -9,7 +10,6 @@ type AppShellProps = {
   sidebar: "docked" | "overlay";
   query: string;
   onQueryChange: (value: string) => void;
-  onSearch?: (value: string) => void;
 };
 
 export function AppShell({
@@ -17,8 +17,8 @@ export function AppShell({
   sidebar,
   query,
   onQueryChange,
-  onSearch,
 }: AppShellProps) {
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -37,7 +37,11 @@ export function AppShell({
       <Header
         query={query}
         onQueryChange={onQueryChange}
-        onSearch={onSearch}
+        onSearch={(value) => {
+          // Search results live on the home grid, which reads `?q=`.
+          const trimmed = value.trim();
+          router.push(trimmed ? `/?q=${encodeURIComponent(trimmed)}` : "/");
+        }}
         onToggleSidebar={() => setSidebarOpen((open) => !open)}
       />
       <div className="flex min-h-0 flex-1">

@@ -110,20 +110,6 @@ const COMMENTS: Record<string, Comment[]> = {
   ],
 };
 
-export function formatAge(hoursAgo: number): string {
-  if (hoursAgo < 1) return "just now";
-  const units: [number, string][] = [
-    [24 * 365, "year"],
-    [24 * 30, "month"],
-    [24 * 7, "week"],
-    [24, "day"],
-    [1, "hour"],
-  ];
-  const [size, label] = units.find(([unit]) => hoursAgo >= unit)!;
-  const n = Math.floor(hoursAgo / size);
-  return `${n} ${label}${n === 1 ? "" : "s"} ago`;
-}
-
 export function getComments(videoId: string): Comment[] {
   return COMMENTS[videoId] ?? [];
 }

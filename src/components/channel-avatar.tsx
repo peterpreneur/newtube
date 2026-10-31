@@ -1,15 +1,32 @@
+import Image from "next/image";
 import type { ReactNode } from "react";
-import type { ChannelIcon } from "@/lib/videos";
+import type { Channel, ChannelIcon } from "@/lib/channels";
 
 type ChannelAvatarProps = {
-  icon: ChannelIcon;
+  channel: Channel;
   className?: string;
+  sizes?: string;
 };
 
-export function ChannelAvatar({ icon, className }: ChannelAvatarProps) {
+export function ChannelAvatar({
+  channel,
+  className,
+  sizes = "40px",
+}: ChannelAvatarProps) {
+  if (channel.avatar) {
+    return (
+      <span
+        className={`relative block overflow-hidden rounded-full ${className ?? ""}`}
+        aria-hidden
+      >
+        <Image src={channel.avatar} alt="" fill sizes={sizes} className="object-cover" />
+      </span>
+    );
+  }
+
   return (
     <svg viewBox="0 0 40 40" className={className} aria-hidden>
-      {ICONS[icon]}
+      {ICONS[channel.icon]}
     </svg>
   );
 }

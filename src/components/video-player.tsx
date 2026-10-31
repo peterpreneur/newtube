@@ -24,7 +24,8 @@ import {
   VolumeOffIcon,
 } from "@/components/icons";
 import { THUMBNAILS } from "@/components/video-thumbnail";
-import { formatTime, parseDuration, type Video } from "@/lib/videos";
+import { formatTime } from "@/lib/format";
+import { parseDuration, type Video } from "@/lib/videos";
 
 // Wide-format stills for the player; scenes without one fall back to their thumbnail.
 const POSTERS: Partial<Record<Video["scene"], StaticImageData>> = {

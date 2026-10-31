@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { Comments } from "@/components/comments";
@@ -17,7 +16,6 @@ type WatchPageProps = {
 };
 
 export function WatchPage({ video, related, comments }: WatchPageProps) {
-  const router = useRouter();
   const [query, setQuery] = useState("");
   const [theater, setTheater] = useState(false);
 
@@ -26,10 +24,6 @@ export function WatchPage({ video, related, comments }: WatchPageProps) {
       sidebar="overlay"
       query={query}
       onQueryChange={setQuery}
-      onSearch={(value) => {
-        const trimmed = value.trim();
-        router.push(trimmed ? `/?q=${encodeURIComponent(trimmed)}` : "/");
-      }}
     >
       <main className="min-w-0 flex-1">
         {/* One player instance moves between grid cells, so theater mode keeps playback state. */}
