@@ -6,6 +6,7 @@ import {
   SearchIcon,
   UploadIcon,
 } from "@/components/icons";
+import { PhonePreviewToggle } from "@/components/phone-preview";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { UserAvatar } from "@/components/user-avatar";
 
@@ -23,7 +24,7 @@ export function Header({
   onToggleSidebar,
 }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b border-zinc-200 bg-background px-3 sm:px-4 dark:border-zinc-800">
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b border-zinc-200 bg-background px-3 sm:gap-4 sm:px-4 dark:border-zinc-800">
       <div className="flex shrink-0 items-center gap-1">
         <button
           type="button"
@@ -105,7 +106,7 @@ export function Header({
         </button>
         <button
           type="button"
-          className="rounded-full p-2 text-zinc-800 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-white/10"
+          className="hidden rounded-full p-2 text-zinc-800 hover:bg-zinc-100 sm:block dark:text-zinc-200 dark:hover:bg-white/10"
           aria-label="Upload"
         >
           <UploadIcon className="h-6 w-6" />
@@ -117,6 +118,7 @@ export function Header({
         >
           <BellIcon className="h-6 w-6" />
         </button>
+        <PhonePreviewToggle />
         <ThemeToggle />
         <button
           type="button"

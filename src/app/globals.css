@@ -15,6 +15,11 @@
   color-scheme: dark;
 }
 
+/* Phone view: hide the desktop page until the phone frame replaces it (see lib/phone-preview.ts). */
+[data-device="phone"] [data-app] {
+  display: none;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
