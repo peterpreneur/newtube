@@ -33,7 +33,7 @@ export function AppShell({
   }, []);
 
   return (
-    <div className="flex min-h-full flex-col bg-white">
+    <div className="flex min-h-full flex-col bg-background">
       <Header
         query={query}
         onQueryChange={onQueryChange}

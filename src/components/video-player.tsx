@@ -148,12 +148,12 @@ export function VideoPlayer({
       className={`relative w-full ${theater ? "h-[min(56.25vw,calc(100vh-10rem))] min-h-60" : "aspect-[12/5] min-h-56"}`}
     >
       {mini ? (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-xl bg-zinc-100 text-sm text-zinc-600">
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-xl bg-zinc-100 text-sm text-zinc-600 dark:bg-white/10 dark:text-zinc-400">
           Playing in miniplayer
           <button
             type="button"
             onClick={() => setMini(false)}
-            className="rounded-full bg-zinc-900 px-4 py-2 font-medium text-white hover:bg-zinc-700"
+            className="rounded-full bg-zinc-900 px-4 py-2 font-medium text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
           >
             Return to player
           </button>

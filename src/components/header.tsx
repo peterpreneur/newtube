@@ -6,6 +6,7 @@ import {
   SearchIcon,
   UploadIcon,
 } from "@/components/icons";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { UserAvatar } from "@/components/user-avatar";
 
 type HeaderProps = {
@@ -22,12 +23,12 @@ export function Header({
   onToggleSidebar,
 }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b border-zinc-200 bg-white px-3 sm:px-4">
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b border-zinc-200 bg-background px-3 sm:px-4 dark:border-zinc-800">
       <div className="flex shrink-0 items-center gap-1">
         <button
           type="button"
           onClick={onToggleSidebar}
-          className="rounded-full p-2 text-zinc-800 hover:bg-zinc-100"
+          className="rounded-full p-2 text-zinc-800 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-white/10"
           aria-label="Toggle navigation"
         >
           <MenuIcon className="h-6 w-6" />
@@ -38,7 +39,7 @@ export function Header({
               <polygon points="3,2 10,6 3,10" fill="currentColor" />
             </svg>
           </span>
-          <span className="relative pt-1.5 text-xl font-extrabold tracking-tight text-zinc-900 italic">
+          <span className="relative pt-1.5 text-xl font-extrabold tracking-tight text-zinc-900 italic dark:text-zinc-100">
             <svg
               viewBox="0 0 80 14"
               className="absolute -top-0.5 left-0 h-3 w-full text-[#ff0000]"
@@ -75,11 +76,11 @@ export function Header({
             value={query}
             onChange={(event) => onQueryChange(event.target.value)}
             placeholder="Search car videos"
-            className="h-10 min-w-0 flex-1 rounded-l-full border border-zinc-300 px-4 text-base text-zinc-900 outline-none placeholder:text-zinc-500 focus:border-sky-500"
+            className="h-10 min-w-0 flex-1 rounded-l-full border border-zinc-300 px-4 text-base text-zinc-900 outline-none placeholder:text-zinc-500 focus:border-sky-500 dark:border-zinc-700 dark:text-zinc-100"
           />
           <button
             type="submit"
-            className="flex h-10 w-16 items-center justify-center rounded-r-full border border-l-0 border-zinc-300 bg-zinc-50 text-zinc-800 hover:bg-zinc-100"
+            className="flex h-10 w-16 items-center justify-center rounded-r-full border border-l-0 border-zinc-300 bg-zinc-50 text-zinc-800 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-white/5 dark:text-zinc-200 dark:hover:bg-white/10"
             aria-label="Search"
           >
             <SearchIcon className="h-5 w-5" />
@@ -87,7 +88,7 @@ export function Header({
         </div>
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-800 hover:bg-zinc-200"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-800 hover:bg-zinc-200 dark:bg-white/10 dark:text-zinc-200 dark:hover:bg-white/20"
           aria-label="Search with voice"
         >
           <MicIcon className="h-5 w-5" />
@@ -97,25 +98,26 @@ export function Header({
       <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-2">
         <button
           type="button"
-          className="rounded-full p-2 text-zinc-800 hover:bg-zinc-100 md:hidden"
+          className="rounded-full p-2 text-zinc-800 hover:bg-zinc-100 md:hidden dark:text-zinc-200 dark:hover:bg-white/10"
           aria-label="Search"
         >
           <SearchIcon className="h-6 w-6" />
         </button>
         <button
           type="button"
-          className="rounded-full p-2 text-zinc-800 hover:bg-zinc-100"
+          className="rounded-full p-2 text-zinc-800 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-white/10"
           aria-label="Upload"
         >
           <UploadIcon className="h-6 w-6" />
         </button>
         <button
           type="button"
-          className="rounded-full p-2 text-zinc-800 hover:bg-zinc-100"
+          className="rounded-full p-2 text-zinc-800 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-white/10"
           aria-label="Notifications"
         >
           <BellIcon className="h-6 w-6" />
         </button>
+        <ThemeToggle />
         <button
           type="button"
           className="ml-1 h-8 w-8 overflow-hidden rounded-full"

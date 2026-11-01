@@ -1,8 +1,18 @@
 @import "tailwindcss";
 
+/* `dark:` follows the theme set on <html> (see lib/theme.ts), not only the OS setting. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 :root {
   --background: #ffffff;
   --foreground: #0f0f0f;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --background: #0f0f0f;
+  --foreground: #f1f1f1;
+  color-scheme: dark;
 }
 
 @theme inline {

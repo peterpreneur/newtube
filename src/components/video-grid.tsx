@@ -20,7 +20,7 @@ export function VideoGrid({
 }: VideoGridProps) {
   if (videos.length === 0) {
     return (
-      <p className="px-2 py-16 text-center text-zinc-600">{emptyMessage}</p>
+      <p className="px-2 py-16 text-center text-zinc-600 dark:text-zinc-400">{emptyMessage}</p>
     );
   }
 
@@ -55,7 +55,7 @@ export function VideoGrid({
                 ) : null}
                 <div className="min-w-0">
                   <h3
-                    className={`line-clamp-2 font-semibold text-zinc-900 ${
+                    className={`line-clamp-2 font-semibold text-zinc-900 dark:text-zinc-100 ${
                       showChannel ? "text-[16px] leading-5" : "text-sm leading-5"
                     }`}
                   >
@@ -64,12 +64,12 @@ export function VideoGrid({
                   {showChannel ? (
                     <Link
                       href={channelHref(channel.handle)}
-                      className="mt-1 block text-sm text-zinc-600 hover:text-zinc-900"
+                      className="mt-1 block text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
                     >
                       {channel.name}
                     </Link>
                   ) : null}
-                  <p className={`text-zinc-600 ${showChannel ? "text-sm" : "text-xs"}`}>
+                  <p className={`text-zinc-600 dark:text-zinc-400 ${showChannel ? "text-sm" : "text-xs"}`}>
                     {videoMeta(video)}
                   </p>
                 </div>

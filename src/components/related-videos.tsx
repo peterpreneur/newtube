@@ -47,8 +47,8 @@ export function RelatedVideos({ video, candidates, className }: RelatedVideosPro
               aria-pressed={isSelected}
               className={`h-8 shrink-0 rounded-full px-3.5 text-sm ${
                 isSelected
-                  ? "bg-zinc-900 font-medium text-white"
-                  : "bg-zinc-100 text-zinc-900 hover:bg-zinc-200"
+                  ? "bg-zinc-900 font-medium text-white dark:bg-zinc-100 dark:text-zinc-900"
+                  : "bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-white/10 dark:text-zinc-100 dark:hover:bg-white/20"
               }`}
             >
               {filter.label}
@@ -58,7 +58,7 @@ export function RelatedVideos({ video, candidates, className }: RelatedVideosPro
       </div>
 
       {videos.length === 0 ? (
-        <p className="px-4 py-8 text-center text-sm text-zinc-600 sm:px-0">
+        <p className="px-4 py-8 text-center text-sm text-zinc-600 sm:px-0 dark:text-zinc-400">
           No more {selected.toLowerCase()} videos yet.
         </p>
       ) : (
@@ -78,18 +78,18 @@ export function RelatedVideos({ video, candidates, className }: RelatedVideosPro
                   />
                 </div>
                 <div className="min-w-0 flex-1 py-0.5 pr-6">
-                  <h3 className="line-clamp-2 text-sm leading-5 font-semibold text-zinc-900">
+                  <h3 className="line-clamp-2 text-sm leading-5 font-semibold text-zinc-900 dark:text-zinc-100">
                     {other.title}
                   </h3>
-                  <p className="mt-1 truncate text-xs text-zinc-600">
+                  <p className="mt-1 truncate text-xs text-zinc-600 dark:text-zinc-400">
                     {getChannel(other.channelHandle).name}
                   </p>
-                  <p className="text-xs text-zinc-600">{videoMeta(other)}</p>
+                  <p className="text-xs text-zinc-600 dark:text-zinc-400">{videoMeta(other)}</p>
                 </div>
               </Link>
               <button
                 type="button"
-                className="absolute top-0 right-0 rounded-full p-1.5 text-zinc-900 hover:bg-zinc-100"
+                className="absolute top-0 right-0 rounded-full p-1.5 text-zinc-900 hover:bg-zinc-100 dark:text-zinc-100 dark:hover:bg-white/10"
                 aria-label={`More actions for ${other.title}`}
               >
                 <MoreVerticalIcon className="h-5 w-5" />

@@ -73,7 +73,7 @@ export function Comments({ initialComments, totalCount }: CommentsProps) {
   return (
     <section className="mt-6 px-4 pb-6 sm:px-0" aria-label="Comments">
       <div className="flex items-center gap-8">
-        <h2 className="text-xl font-bold text-zinc-900">
+        <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
           {count.toLocaleString()} Comments
         </h2>
         <div className="relative">
@@ -81,7 +81,7 @@ export function Comments({ initialComments, totalCount }: CommentsProps) {
             type="button"
             onClick={() => setSortOpen((value) => !value)}
             aria-expanded={sortOpen}
-            className="flex items-center gap-2 text-sm font-medium text-zinc-900"
+            className="flex items-center gap-2 text-sm font-medium text-zinc-900 dark:text-zinc-100"
           >
             <SortIcon className="h-6 w-6" />
             Sort by
@@ -89,7 +89,7 @@ export function Comments({ initialComments, totalCount }: CommentsProps) {
           {sortOpen ? (
             <div
               role="menu"
-              className="absolute top-9 left-0 z-10 w-44 rounded-xl border border-zinc-200 bg-white py-2 shadow-lg"
+              className="absolute top-9 left-0 z-10 w-44 rounded-xl border border-zinc-200 bg-background py-2 shadow-lg dark:border-zinc-800 dark:bg-zinc-800"
             >
               {(
                 [
@@ -106,8 +106,8 @@ export function Comments({ initialComments, totalCount }: CommentsProps) {
                     setSort(value);
                     setSortOpen(false);
                   }}
-                  className={`block w-full px-4 py-2 text-left text-sm hover:bg-zinc-100 ${
-                    sort === value ? "bg-zinc-100 font-medium" : ""
+                  className={`block w-full px-4 py-2 text-left text-sm hover:bg-zinc-100 dark:hover:bg-white/10 ${
+                    sort === value ? "bg-zinc-100 font-medium dark:bg-white/10" : ""
                   }`}
                 >
                   {label}
@@ -138,7 +138,7 @@ export function Comments({ initialComments, totalCount }: CommentsProps) {
             onFocus={() => setComposing(true)}
             placeholder="Add a comment..."
             autoComplete="off"
-            className="w-full border-b border-zinc-300 pt-2 pb-1 text-sm text-zinc-900 outline-none placeholder:text-zinc-500 focus:border-zinc-900"
+            className="w-full border-b border-zinc-300 pt-2 pb-1 text-sm text-zinc-900 outline-none placeholder:text-zinc-500 focus:border-zinc-900 dark:border-zinc-700 dark:text-zinc-100 dark:focus:border-zinc-100"
           />
           {composing ? (
             <div className="mt-2 flex justify-end gap-2">
@@ -148,14 +148,14 @@ export function Comments({ initialComments, totalCount }: CommentsProps) {
                   setDraft("");
                   setComposing(false);
                 }}
-                className="h-9 rounded-full px-4 text-sm font-medium text-zinc-900 hover:bg-zinc-100"
+                className="h-9 rounded-full px-4 text-sm font-medium text-zinc-900 hover:bg-zinc-100 dark:text-zinc-100 dark:hover:bg-white/10"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={!draft.trim()}
-                className="h-9 rounded-full bg-sky-600 px-4 text-sm font-medium text-white hover:bg-sky-700 disabled:bg-zinc-100 disabled:text-zinc-400"
+                className="h-9 rounded-full bg-sky-600 px-4 text-sm font-medium text-white hover:bg-sky-700 disabled:bg-zinc-100 disabled:text-zinc-400 dark:disabled:bg-white/10 dark:disabled:text-zinc-500"
               >
                 Comment
               </button>
@@ -176,21 +176,21 @@ export function Comments({ initialComments, totalCount }: CommentsProps) {
               />
               <div className="min-w-0 flex-1">
                 <p className="text-[13px]">
-                  <span className="font-semibold text-zinc-900">
+                  <span className="font-semibold text-zinc-900 dark:text-zinc-100">
                     {comment.author === "You" ? "@you" : comment.author}
                   </span>{" "}
-                  <span className="text-zinc-600">{formatAge(comment.hoursAgo)}</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">{formatAge(comment.hoursAgo)}</span>
                 </p>
-                <p className="mt-0.5 text-sm break-words whitespace-pre-line text-zinc-900">
+                <p className="mt-0.5 text-sm break-words whitespace-pre-line text-zinc-900 dark:text-zinc-100">
                   {comment.text}
                 </p>
-                <div className="mt-1 -ml-2 flex items-center text-xs text-zinc-600">
+                <div className="mt-1 -ml-2 flex items-center text-xs text-zinc-600 dark:text-zinc-400">
                   <button
                     type="button"
                     onClick={() => toggleVote(comment.id, "like")}
                     aria-pressed={vote === "like"}
                     aria-label="Like comment"
-                    className="rounded-full p-2 text-zinc-900 hover:bg-zinc-100"
+                    className="rounded-full p-2 text-zinc-900 hover:bg-zinc-100 dark:text-zinc-100 dark:hover:bg-white/10"
                   >
                     <ThumbUpIcon filled={vote === "like"} className="h-5 w-5" />
                   </button>
@@ -204,14 +204,14 @@ export function Comments({ initialComments, totalCount }: CommentsProps) {
                     onClick={() => toggleVote(comment.id, "dislike")}
                     aria-pressed={vote === "dislike"}
                     aria-label="Dislike comment"
-                    className="rounded-full p-2 text-zinc-900 hover:bg-zinc-100"
+                    className="rounded-full p-2 text-zinc-900 hover:bg-zinc-100 dark:text-zinc-100 dark:hover:bg-white/10"
                   >
                     <ThumbDownIcon filled={vote === "dislike"} className="h-5 w-5" />
                   </button>
                   <button
                     type="button"
                     onClick={() => reply(comment.author)}
-                    className="ml-4 h-8 rounded-full px-3 text-xs font-medium text-zinc-900 hover:bg-zinc-100"
+                    className="ml-4 h-8 rounded-full px-3 text-xs font-medium text-zinc-900 hover:bg-zinc-100 dark:text-zinc-100 dark:hover:bg-white/10"
                   >
                     Reply
                   </button>
@@ -219,7 +219,7 @@ export function Comments({ initialComments, totalCount }: CommentsProps) {
               </div>
               <button
                 type="button"
-                className="h-10 w-10 shrink-0 self-start rounded-full p-2 text-zinc-900 hover:bg-zinc-100"
+                className="h-10 w-10 shrink-0 self-start rounded-full p-2 text-zinc-900 hover:bg-zinc-100 dark:text-zinc-100 dark:hover:bg-white/10"
                 aria-label="Comment actions"
               >
                 <MoreVerticalIcon className="h-6 w-6" />

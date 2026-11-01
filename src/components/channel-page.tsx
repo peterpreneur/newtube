@@ -57,7 +57,7 @@ export function ChannelPage({ channel, videos }: ChannelPageProps) {
       <main className="min-w-0 flex-1 px-4 pt-2 pb-10 lg:px-6">
         {channel.banner ? (
           <div
-            className="relative w-full overflow-hidden rounded-xl bg-zinc-200"
+            className="relative w-full overflow-hidden rounded-xl bg-zinc-200 dark:bg-zinc-800"
             style={{ aspectRatio: channel.banner.width / channel.banner.height }}
           >
             <Image
@@ -79,11 +79,11 @@ export function ChannelPage({ channel, videos }: ChannelPageProps) {
             className="h-[72px] w-[72px] shrink-0 sm:h-32 sm:w-32 lg:h-40 lg:w-40"
           />
           <div className="min-w-0">
-            <h1 className="text-2xl font-bold text-zinc-900 sm:text-4xl">
+            <h1 className="text-2xl font-bold text-zinc-900 sm:text-4xl dark:text-zinc-100">
               {channel.name}
             </h1>
-            <p className="mt-1 text-sm text-zinc-600 sm:mt-2">
-              <span className="font-medium text-zinc-900">@{channel.handle}</span>
+            <p className="mt-1 text-sm text-zinc-600 sm:mt-2 dark:text-zinc-400">
+              <span className="font-medium text-zinc-900 dark:text-zinc-100">@{channel.handle}</span>
               {" · "}
               {formatCount(channel.subscribers)} subscribers
               {" · "}
@@ -92,7 +92,7 @@ export function ChannelPage({ channel, videos }: ChannelPageProps) {
             <button
               type="button"
               onClick={() => aboutRef.current?.showModal()}
-              className="mt-1 flex max-w-full items-center gap-2 text-left text-sm text-zinc-600 hover:text-zinc-900"
+              className="mt-1 flex max-w-full items-center gap-2 text-left text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
             >
               <span className="truncate">{channel.tagline}</span>
               <span aria-hidden className="text-lg leading-none">
@@ -106,8 +106,8 @@ export function ChannelPage({ channel, videos }: ChannelPageProps) {
               aria-pressed={subscribed}
               className={`mt-3 h-9 rounded-full px-5 text-sm font-medium sm:h-10 ${
                 subscribed
-                  ? "bg-zinc-100 text-zinc-900 hover:bg-zinc-200"
-                  : "bg-zinc-900 text-white hover:bg-zinc-700"
+                  ? "bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-white/10 dark:text-zinc-100 dark:hover:bg-white/20"
+                  : "bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
               }`}
             >
               {subscribed ? "Subscribed" : "Subscribe"}
@@ -115,7 +115,7 @@ export function ChannelPage({ channel, videos }: ChannelPageProps) {
           </div>
         </header>
 
-        <div className="mt-4 flex items-center gap-2 border-b border-zinc-200">
+        <div className="mt-4 flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-800">
           <div role="tablist" aria-label="Channel sections" className="flex overflow-x-auto">
             {TABS.map((name) => {
               const active = name === tab && !searching;
@@ -131,12 +131,12 @@ export function ChannelPage({ channel, videos }: ChannelPageProps) {
                     setSearchOpen(false);
                   }}
                   className={`relative h-12 shrink-0 px-3 text-base font-medium sm:px-5 ${
-                    active ? "text-zinc-900" : "text-zinc-600 hover:text-zinc-900"
+                    active ? "text-zinc-900 dark:text-zinc-100" : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
                   }`}
                 >
                   {name}
                   {active ? (
-                    <span className="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-zinc-900 sm:inset-x-5" />
+                    <span className="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-zinc-900 sm:inset-x-5 dark:bg-zinc-100" />
                   ) : null}
                 </button>
               );
@@ -150,13 +150,13 @@ export function ChannelPage({ channel, videos }: ChannelPageProps) {
             <button
               type="button"
               onClick={() => setSearchOpen(true)}
-              className="rounded-full p-2 text-zinc-700 hover:bg-zinc-100"
+              className="rounded-full p-2 text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-white/10"
               aria-label={`Search ${channel.name}`}
             >
               <SearchIcon className="h-6 w-6" />
             </button>
             {searchOpen ? (
-              <div className="flex items-center border-b border-zinc-900">
+              <div className="flex items-center border-b border-zinc-900 dark:border-zinc-100">
                 <input
                   autoFocus
                   value={channelQuery}
@@ -177,7 +177,7 @@ export function ChannelPage({ channel, videos }: ChannelPageProps) {
                     setChannelQuery("");
                     setSearchOpen(false);
                   }}
-                  className="rounded-full p-1 text-zinc-600 hover:bg-zinc-100"
+                  className="rounded-full p-1 text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-white/10"
                   aria-label="Clear search"
                 >
                   <CloseIcon className="h-4 w-4" />
@@ -206,8 +206,8 @@ export function ChannelPage({ channel, videos }: ChannelPageProps) {
                     aria-pressed={sort === name}
                     className={`h-8 rounded-lg px-3 text-sm font-medium ${
                       sort === name
-                        ? "bg-zinc-900 text-white"
-                        : "bg-zinc-100 text-zinc-900 hover:bg-zinc-200"
+                        ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+                        : "bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-white/10 dark:text-zinc-100 dark:hover:bg-white/20"
                     }`}
                   >
                     {name}
@@ -225,7 +225,7 @@ export function ChannelPage({ channel, videos }: ChannelPageProps) {
             <div className="flex flex-col gap-8">
               <Link
                 href={`/watch/${latest.id}`}
-                className="group flex flex-col gap-4 border-b border-zinc-200 pb-6 sm:flex-row"
+                className="group flex flex-col gap-4 border-b border-zinc-200 pb-6 sm:flex-row dark:border-zinc-800"
               >
                 <div className="w-full shrink-0 sm:w-[424px]">
                   <VideoThumbnail
@@ -237,13 +237,13 @@ export function ChannelPage({ channel, videos }: ChannelPageProps) {
                   />
                 </div>
                 <div className="min-w-0">
-                  <h2 className="text-lg font-semibold text-zinc-900">{latest.title}</h2>
-                  <p className="mt-1 text-sm text-zinc-600">{videoMeta(latest)}</p>
-                  <p className="mt-3 text-sm text-zinc-700">{latest.description}</p>
+                  <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{latest.title}</h2>
+                  <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{videoMeta(latest)}</p>
+                  <p className="mt-3 text-sm text-zinc-700 dark:text-zinc-300">{latest.description}</p>
                 </div>
               </Link>
               <section>
-                <h2 className="mb-4 text-xl font-bold text-zinc-900">Popular videos</h2>
+                <h2 className="mb-4 text-xl font-bold text-zinc-900 dark:text-zinc-100">Popular videos</h2>
                 <VideoGrid
                   videos={popular}
                   showChannel={false}
@@ -252,7 +252,7 @@ export function ChannelPage({ channel, videos }: ChannelPageProps) {
               </section>
             </div>
           ) : (
-            <p className="py-16 text-center text-zinc-600">
+            <p className="py-16 text-center text-zinc-600 dark:text-zinc-400">
               {channel.name} hasn&apos;t posted any {tab.toLowerCase()} yet.
             </p>
           )}
@@ -261,36 +261,36 @@ export function ChannelPage({ channel, videos }: ChannelPageProps) {
         <dialog
           ref={aboutRef}
           aria-labelledby="about-title"
-          className="m-auto w-[min(32rem,calc(100vw-2rem))] rounded-2xl p-0 shadow-2xl backdrop:bg-black/50"
+          className="m-auto w-[min(32rem,calc(100vw-2rem))] rounded-2xl bg-background p-0 text-foreground shadow-2xl backdrop:bg-black/50 dark:bg-zinc-900"
           onClick={(event) => {
             if (event.target === event.currentTarget) event.currentTarget.close();
           }}
         >
           <div className="p-6">
             <div className="flex items-start justify-between gap-4">
-              <h2 id="about-title" className="text-xl font-bold text-zinc-900">
+              <h2 id="about-title" className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
                 About
               </h2>
               <button
                 type="button"
                 onClick={() => aboutRef.current?.close()}
-                className="-mt-1 -mr-2 rounded-full p-2 text-zinc-700 hover:bg-zinc-100"
+                className="-mt-1 -mr-2 rounded-full p-2 text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-white/10"
                 aria-label="Close"
               >
                 <CloseIcon className="h-5 w-5" />
               </button>
             </div>
-            <p className="mt-3 text-sm leading-6 text-zinc-800">{channel.about}</p>
-            <h3 className="mt-6 text-base font-bold text-zinc-900">Channel details</h3>
+            <p className="mt-3 text-sm leading-6 text-zinc-800 dark:text-zinc-200">{channel.about}</p>
+            <h3 className="mt-6 text-base font-bold text-zinc-900 dark:text-zinc-100">Channel details</h3>
             <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
-              <dt className="text-zinc-600">Handle</dt>
-              <dd className="text-zinc-900">@{channel.handle}</dd>
-              <dt className="text-zinc-600">Subscribers</dt>
-              <dd className="text-zinc-900">{channel.subscribers.toLocaleString()}</dd>
-              <dt className="text-zinc-600">Videos</dt>
-              <dd className="text-zinc-900">{channel.videoCount}</dd>
-              <dt className="text-zinc-600">Joined</dt>
-              <dd className="text-zinc-900">{channel.joined}</dd>
+              <dt className="text-zinc-600 dark:text-zinc-400">Handle</dt>
+              <dd className="text-zinc-900 dark:text-zinc-100">@{channel.handle}</dd>
+              <dt className="text-zinc-600 dark:text-zinc-400">Subscribers</dt>
+              <dd className="text-zinc-900 dark:text-zinc-100">{channel.subscribers.toLocaleString()}</dd>
+              <dt className="text-zinc-600 dark:text-zinc-400">Videos</dt>
+              <dd className="text-zinc-900 dark:text-zinc-100">{channel.videoCount}</dd>
+              <dt className="text-zinc-600 dark:text-zinc-400">Joined</dt>
+              <dd className="text-zinc-900 dark:text-zinc-100">{channel.joined}</dd>
             </dl>
           </div>
         </dialog>
@@ -306,19 +306,19 @@ export function ChannelPageSkeleton() {
   return (
     <AppShell sidebar="docked" query={query} onQueryChange={setQuery}>
       <main className="min-w-0 flex-1 px-4 pt-2 pb-10 lg:px-6" aria-busy="true">
-        <div className="aspect-[7.8] w-full animate-pulse rounded-xl bg-zinc-200" />
+        <div className="aspect-[7.8] w-full animate-pulse rounded-xl bg-zinc-200 dark:bg-zinc-800" />
         <div className="mt-4 flex items-center gap-6">
-          <div className="h-[72px] w-[72px] rounded-full bg-zinc-200 sm:h-32 sm:w-32 lg:h-40 lg:w-40" />
+          <div className="h-[72px] w-[72px] rounded-full bg-zinc-200 sm:h-32 sm:w-32 lg:h-40 lg:w-40 dark:bg-zinc-800" />
           <div className="flex flex-col gap-3">
-            <div className="h-8 w-56 rounded bg-zinc-200" />
-            <div className="h-4 w-72 rounded bg-zinc-200" />
-            <div className="h-10 w-28 rounded-full bg-zinc-200" />
+            <div className="h-8 w-56 rounded bg-zinc-200 dark:bg-zinc-800" />
+            <div className="h-4 w-72 rounded bg-zinc-200 dark:bg-zinc-800" />
+            <div className="h-10 w-28 rounded-full bg-zinc-200 dark:bg-zinc-800" />
           </div>
         </div>
-        <div className="mt-6 h-12 border-b border-zinc-200" />
+        <div className="mt-6 h-12 border-b border-zinc-200 dark:border-zinc-800" />
         <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {Array.from({ length: 6 }, (_, index) => (
-            <div key={index} className="aspect-[22/7] rounded-xl bg-zinc-200" />
+            <div key={index} className="aspect-[22/7] rounded-xl bg-zinc-200 dark:bg-zinc-800" />
           ))}
         </div>
       </main>

@@ -17,7 +17,7 @@ import { videoMeta, type Video } from "@/lib/videos";
 
 type Vote = "like" | "dislike" | null;
 
-const PILL = "flex h-9 shrink-0 items-center gap-2 rounded-full bg-zinc-100 px-4 text-sm font-medium text-zinc-900 hover:bg-zinc-200";
+const PILL = "flex h-9 shrink-0 items-center gap-2 rounded-full bg-zinc-100 px-4 text-sm font-medium text-zinc-900 hover:bg-zinc-200 dark:bg-white/10 dark:text-zinc-100 dark:hover:bg-white/20";
 
 export function VideoDetails({ video }: { video: Video }) {
   const [subscribed, setSubscribed] = useState(false);
@@ -48,7 +48,7 @@ export function VideoDetails({ video }: { video: Video }) {
 
   return (
     <section className="mt-3 px-4 sm:px-0">
-      <h1 className="text-xl leading-7 font-bold text-zinc-900 sm:text-[22px]">
+      <h1 className="text-xl leading-7 font-bold text-zinc-900 sm:text-[22px] dark:text-zinc-100">
         {video.title}
       </h1>
 
@@ -57,8 +57,8 @@ export function VideoDetails({ video }: { video: Video }) {
           <Link href={channelHref(channel.handle)} className="flex min-w-0 items-center gap-3">
             <ChannelAvatar channel={channel} className="h-10 w-10 shrink-0" />
             <div className="min-w-0">
-              <p className="truncate font-semibold text-zinc-900">{channel.name}</p>
-              <p className="text-xs text-zinc-600">
+              <p className="truncate font-semibold text-zinc-900 dark:text-zinc-100">{channel.name}</p>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400">
                 {formatCount(channel.subscribers)} subscribers
               </p>
             </div>
@@ -69,8 +69,8 @@ export function VideoDetails({ video }: { video: Video }) {
             aria-pressed={subscribed}
             className={`ml-3 h-9 shrink-0 rounded-full px-4 text-sm font-medium ${
               subscribed
-                ? "bg-zinc-100 text-zinc-900 hover:bg-zinc-200"
-                : "bg-zinc-900 text-white hover:bg-zinc-700"
+                ? "bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-white/10 dark:text-zinc-100 dark:hover:bg-white/20"
+                : "bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
             }`}
           >
             {subscribed ? "Subscribed" : "Subscribe"}
@@ -78,24 +78,24 @@ export function VideoDetails({ video }: { video: Video }) {
         </div>
 
         <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0 sm:pb-0">
-          <div className="flex h-9 shrink-0 items-center rounded-full bg-zinc-100 text-sm font-medium text-zinc-900">
+          <div className="flex h-9 shrink-0 items-center rounded-full bg-zinc-100 text-sm font-medium text-zinc-900 dark:bg-white/10 dark:text-zinc-100">
             <button
               type="button"
               onClick={() => setVote((value) => (value === "like" ? null : "like"))}
               aria-pressed={vote === "like"}
               aria-label={`Like this video along with ${likes.toLocaleString()} other people`}
-              className="flex h-full items-center gap-2 rounded-l-full pr-3 pl-4 hover:bg-zinc-200"
+              className="flex h-full items-center gap-2 rounded-l-full pr-3 pl-4 hover:bg-zinc-200 dark:hover:bg-white/20"
             >
               <ThumbUpIcon filled={vote === "like"} className="h-5 w-5" />
               {formatCount(likes)}
             </button>
-            <span className="h-6 w-px bg-zinc-300" aria-hidden />
+            <span className="h-6 w-px bg-zinc-300 dark:bg-zinc-600" aria-hidden />
             <button
               type="button"
               onClick={() => setVote((value) => (value === "dislike" ? null : "dislike"))}
               aria-pressed={vote === "dislike"}
               aria-label="Dislike this video"
-              className="flex h-full items-center rounded-r-full pr-4 pl-3 hover:bg-zinc-200"
+              className="flex h-full items-center rounded-r-full pr-4 pl-3 hover:bg-zinc-200 dark:hover:bg-white/20"
             >
               <ThumbDownIcon filled={vote === "dislike"} className="h-5 w-5" />
             </button>
@@ -118,7 +118,7 @@ export function VideoDetails({ video }: { video: Video }) {
           </button>
           <button
             type="button"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-zinc-900 hover:bg-zinc-200"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-white/10 dark:text-zinc-100 dark:hover:bg-white/20"
             aria-label="More actions"
           >
             <MoreHorizontalIcon className="h-5 w-5" />
@@ -126,7 +126,7 @@ export function VideoDetails({ video }: { video: Video }) {
         </div>
       </div>
 
-      <div className="mt-3 rounded-xl bg-zinc-100 p-3 text-sm text-zinc-900">
+      <div className="mt-3 rounded-xl bg-zinc-100 p-3 text-sm text-zinc-900 dark:bg-white/10 dark:text-zinc-100">
         <p className="font-semibold">
           {videoMeta(video)}
         </p>
@@ -136,7 +136,7 @@ export function VideoDetails({ video }: { video: Video }) {
       <div
         role="status"
         aria-live="polite"
-        className={`fixed bottom-6 left-6 z-50 rounded-lg bg-zinc-900 px-4 py-3 text-sm text-white shadow-lg transition-all ${
+        className={`fixed bottom-6 left-6 z-50 rounded-lg bg-zinc-900 px-4 py-3 text-sm text-white shadow-lg transition-all dark:bg-zinc-100 dark:text-zinc-900 ${
           toast ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
         }`}
       >
