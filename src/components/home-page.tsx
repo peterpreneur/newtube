@@ -1,22 +1,24 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { CategoryChips } from "@/components/category-chips";
 import { VideoGrid } from "@/components/video-grid";
-import { VIDEOS, filterVideos, type Category } from "@/lib/videos";
+import { filterVideos, type Category, type Video } from "@/lib/videos";
 
 type HomePageProps = {
+  videos: Video[];
   initialQuery?: string;
 };
 
-export function HomePage({ initialQuery = "" }: HomePageProps) {
+export function HomePage({ videos: allVideos, initialQuery = "" }: HomePageProps) {
   const [query, setQuery] = useState(initialQuery);
   const [category, setCategory] = useState<Category>("All");
 
   const videos = useMemo(
-    () => filterVideos(VIDEOS, category, query),
-    [category, query],
+    () => filterVideos(allVideos, category, query),
+    [allVideos, category, query],
   );
 
   return (
@@ -37,4 +39,10 @@ export function HomePage({ initialQuery = "" }: HomePageProps) {
       </main>
     </AppShell>
   );
+}
+
+/** Applies a `?q=` search arriving from another page's header. */
+export function HomeWithQuery({ videos }: { videos: Video[] }) {
+  const query = useSearchParams().get("q") ?? "";
+  return <HomePage key={query} videos={videos} initialQuery={query} />;
 }

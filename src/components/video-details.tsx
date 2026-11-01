@@ -11,7 +11,7 @@ import {
   ThumbUpIcon,
 } from "@/components/icons";
 import Link from "next/link";
-import { channelHref, getChannel } from "@/lib/channels";
+import { channelHref } from "@/lib/channels";
 import { formatCount } from "@/lib/format";
 import { videoMeta, type Video } from "@/lib/videos";
 
@@ -44,7 +44,7 @@ export function VideoDetails({ video }: { video: Video }) {
   }
 
   const likes = video.likes + (vote === "like" ? 1 : 0);
-  const channel = getChannel(video.channelHandle);
+  const { channel } = video;
 
   return (
     <section className="mt-3 px-4 sm:px-0">

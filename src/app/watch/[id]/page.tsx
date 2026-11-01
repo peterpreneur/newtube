@@ -2,18 +2,18 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { WatchPage, WatchPageSkeleton } from "@/components/watch-page";
-import { getComments } from "@/lib/comments";
-import { VIDEOS, getVideo } from "@/lib/videos";
+import { getComments, getRelatedVideos, getVideo, getVideoIds } from "@/db/queries";
 
-export function generateStaticParams() {
-  return VIDEOS.map((video) => ({ id: video.id }));
+export async function generateStaticParams() {
+  const ids = await getVideoIds();
+  return ids.map((id) => ({ id }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps<"/watch/[id]">): Promise<Metadata> {
   const { id } = await params;
-  const video = getVideo(id);
+  const video = await getVideo(id);
   return video
     ? { title: video.title, description: video.description }
     : { title: "Video not found" };
@@ -34,7 +34,11 @@ async function WatchContent({
   params: PageProps<"/watch/[id]">["params"];
 }) {
   const { id } = await params;
-  const video = getVideo(id);
+  const [video, related, comments] = await Promise.all([
+    getVideo(id),
+    getRelatedVideos(id),
+    getComments(id),
+  ]);
   if (!video) {
     notFound();
   }
@@ -44,8 +48,8 @@ async function WatchContent({
       // Remount per video so playback, votes and drafts don't carry over between videos.
       key={video.id}
       video={video}
-      related={VIDEOS.filter((other) => other.id !== video.id)}
-      comments={getComments(video.id)}
+      related={related}
+      comments={comments}
     />
   );
 }

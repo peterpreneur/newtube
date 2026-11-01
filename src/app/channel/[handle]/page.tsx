@@ -2,18 +2,18 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { ChannelPage, ChannelPageSkeleton } from "@/components/channel-page";
-import { CHANNELS, findChannel } from "@/lib/channels";
-import { getChannelVideos } from "@/lib/videos";
+import { getChannel, getChannelHandles, getChannelVideos } from "@/db/queries";
 
-export function generateStaticParams() {
-  return CHANNELS.map((channel) => ({ handle: channel.handle }));
+export async function generateStaticParams() {
+  const handles = await getChannelHandles();
+  return handles.map((handle) => ({ handle }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps<"/channel/[handle]">): Promise<Metadata> {
   const { handle } = await params;
-  const channel = findChannel(handle);
+  const channel = await getChannel(handle);
   return channel
     ? { title: channel.name, description: channel.tagline }
     : { title: "Channel not found" };
@@ -34,16 +34,13 @@ async function ChannelContent({
   params: PageProps<"/channel/[handle]">["params"];
 }) {
   const { handle } = await params;
-  const channel = findChannel(handle);
+  const [channel, videos] = await Promise.all([
+    getChannel(handle),
+    getChannelVideos(handle),
+  ]);
   if (!channel) {
     notFound();
   }
 
-  return (
-    <ChannelPage
-      key={channel.handle}
-      channel={channel}
-      videos={getChannelVideos(channel.handle)}
-    />
-  );
+  return <ChannelPage key={channel.handle} channel={channel} videos={videos} />;
 }

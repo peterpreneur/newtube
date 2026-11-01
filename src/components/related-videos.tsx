@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { MoreVerticalIcon } from "@/components/icons";
 import { VideoThumbnail } from "@/components/video-thumbnail";
-import { getChannel } from "@/lib/channels";
 import { videoMeta, type Video } from "@/lib/videos";
 
 type RelatedVideosProps = {
@@ -82,7 +81,7 @@ export function RelatedVideos({ video, candidates, className }: RelatedVideosPro
                     {other.title}
                   </h3>
                   <p className="mt-1 truncate text-xs text-zinc-600 dark:text-zinc-400">
-                    {getChannel(other.channelHandle).name}
+                    {other.channel.name}
                   </p>
                   <p className="text-xs text-zinc-600 dark:text-zinc-400">{videoMeta(other)}</p>
                 </div>

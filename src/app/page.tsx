@@ -1,19 +1,14 @@
-"use client";
-
 import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
-import { HomePage } from "@/components/home-page";
+import { HomePage, HomeWithQuery } from "@/components/home-page";
+import { getVideos } from "@/db/queries";
 
-function HomeWithQuery() {
-  const query = useSearchParams().get("q") ?? "";
-  return <HomePage key={query} initialQuery={query} />;
-}
+export default async function Home() {
+  const videos = await getVideos();
 
-export default function Home() {
   // The unfiltered grid is the static shell; a `?q=` search from another page fills in on the client.
   return (
-    <Suspense fallback={<HomePage />}>
-      <HomeWithQuery />
+    <Suspense fallback={<HomePage videos={videos} />}>
+      <HomeWithQuery videos={videos} />
     </Suspense>
   );
 }

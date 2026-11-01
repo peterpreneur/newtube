@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ChannelAvatar } from "@/components/channel-avatar";
 import { VideoThumbnail } from "@/components/video-thumbnail";
-import { channelHref, getChannel } from "@/lib/channels";
+import { channelHref } from "@/lib/channels";
 import { videoMeta, type Video } from "@/lib/videos";
 
 type VideoGridProps = {
@@ -31,7 +31,7 @@ export function VideoGrid({
       }`}
     >
       {videos.map((video, index) => {
-        const channel = getChannel(video.channelHandle);
+        const { channel } = video;
         const href = `/watch/${video.id}`;
 
         return (
