@@ -1,5 +1,7 @@
 // Loads the mock data into Postgres: `npm run db:seed`.
-// Replaces everything in users, channels, videos and comments, so it's safe to rerun.
+// Replaces all channels, videos and comments, plus the seeded comment authors, so it's safe to
+// rerun. Real accounts (anyone who signed up, and admins) are left alone.
+import { inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { channels, comments, users, videos } from "../src/db/schema.ts";
@@ -26,18 +28,22 @@ try {
     await tx.delete(comments);
     await tx.delete(videos);
     await tx.delete(channels);
-    await tx.delete(users);
-
+    // Comment authors are passwordless users with a reserved example.com address.
     const authors = new Map(
       Object.values(SEED_COMMENTS)
         .flat()
         .map((comment) => [comment.author, comment.avatarColor]),
     );
+    const authorEmail = (name: string) => `${name.toLowerCase()}@example.com`;
+    await tx.delete(users).where(inArray(users.email, [...authors.keys()].map(authorEmail)));
+
     const userRows = await tx
       .insert(users)
-      .values([...authors].map(([handle, avatarColor]) => ({ handle, avatarColor })))
-      .returning({ id: users.id, handle: users.handle });
-    const userId = new Map(userRows.map((row) => [row.handle, row.id]));
+      .values(
+        [...authors].map(([name, avatarColor]) => ({ name, email: authorEmail(name), avatarColor })),
+      )
+      .returning({ id: users.id, name: users.name });
+    const userId = new Map(userRows.map((row) => [row.name, row.id]));
 
     const channelRows = await tx
       .insert(channels)

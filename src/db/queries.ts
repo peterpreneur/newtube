@@ -154,7 +154,7 @@ export async function getComments(videoId: string): Promise<Comment[]> {
   const rows = await db
     .select({
       id: comments.id,
-      author: users.handle,
+      author: users.name,
       avatarColor: users.avatarColor,
       createdAt: comments.createdAt,
       text: comments.body,

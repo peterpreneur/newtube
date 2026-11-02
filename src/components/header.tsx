@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AccountMenu } from "@/components/account-menu";
 import {
   BellIcon,
   MenuIcon,
@@ -8,7 +9,6 @@ import {
 } from "@/components/icons";
 import { PhonePreviewToggle } from "@/components/phone-preview";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { UserAvatar } from "@/components/user-avatar";
 
 type HeaderProps = {
   query: string;
@@ -120,13 +120,7 @@ export function Header({
         </button>
         <PhonePreviewToggle />
         <ThemeToggle />
-        <button
-          type="button"
-          className="ml-1 h-8 w-8 overflow-hidden rounded-full"
-          aria-label="Your channel"
-        >
-          <UserAvatar className="h-full w-full" />
-        </button>
+        <AccountMenu />
       </div>
     </header>
   );

@@ -16,9 +16,12 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed": "node --env-file-if-exists=.env.local --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db-seed.mts"
+    "db:seed": "node --env-file-if-exists=.env.local --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db-seed.mts",
+    "admin:create": "node --env-file-if-exists=.env.local --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/admin-create.mts"
   },
   "dependencies": {
+    "@fal-ai/client": "^1.10.1",
+    "better-auth": "^1.7.15",
     "drizzle-orm": "^0.45.4",
     "next": "16.4.3",
     "postgres": "^4.0.0",

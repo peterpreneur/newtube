@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { date, index, integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { boolean, date, index, integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import type { ChannelIcon } from "@/lib/channels";
 import type { Category, ThumbnailScene } from "@/lib/videos";
 
@@ -7,12 +7,79 @@ import type { Category, ThumbnailScene } from "@/lib/videos";
 // Data API, and with no policies that API can't read or write anything. The app connects as
 // the `postgres` role, which bypasses RLS.
 
+// users, sessions, accounts and verifications are Better Auth's tables (see lib/auth.ts); the
+// property names are the ones it expects. Comment authors are users without a password.
+
+const timestamps = {
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+};
+
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
-  handle: text("handle").notNull().unique(),
-  avatarColor: text("avatar_color").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  /** Display name, shown on comments. */
+  name: text("name").notNull(),
+  email: text("email").notNull().unique(),
+  emailVerified: boolean("email_verified").notNull().default(false),
+  image: text("image"),
+  avatarColor: text("avatar_color").notNull().default("#2563eb"),
+  /** Set only by `npm run admin:create`; sign-up can't touch it. */
+  isAdmin: boolean("is_admin").notNull().default(false),
+  ...timestamps,
 }).enableRLS();
+
+export const sessions = pgTable(
+  "sessions",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    token: text("token").notNull().unique(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    ipAddress: text("ip_address"),
+    userAgent: text("user_agent"),
+    ...timestamps,
+  },
+  (table) => [index("sessions_user_id_idx").on(table.userId)],
+).enableRLS();
+
+/** Sign-in methods; email-and-password logins are providerId "credential" with a password hash. */
+export const accounts = pgTable(
+  "accounts",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    accountId: text("account_id").notNull(),
+    providerId: text("provider_id").notNull(),
+    password: text("password"),
+    accessToken: text("access_token"),
+    refreshToken: text("refresh_token"),
+    idToken: text("id_token"),
+    accessTokenExpiresAt: timestamp("access_token_expires_at", { withTimezone: true }),
+    refreshTokenExpiresAt: timestamp("refresh_token_expires_at", { withTimezone: true }),
+    scope: text("scope"),
+    ...timestamps,
+  },
+  (table) => [index("accounts_user_id_idx").on(table.userId)],
+).enableRLS();
+
+export const verifications = pgTable(
+  "verifications",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    identifier: text("identifier").notNull(),
+    value: text("value").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    ...timestamps,
+  },
+  (table) => [index("verifications_identifier_idx").on(table.identifier)],
+).enableRLS();
 
 export const channels = pgTable("channels", {
   id: uuid("id").primaryKey().defaultRandom(),
